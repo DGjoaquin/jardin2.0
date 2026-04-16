@@ -1,1 +1,50 @@
 /*para usar el google font agregar'font-family: "Inter", sans-serif'*/
+body {
+    font-family: "Inter", sans-serif;
+    margin: 0;
+}
+
+.encabezado {
+    background-color: #1e3a8a;
+    padding: 20px;
+    text-align: center;
+}
+
+.logo {
+    color: white;
+    margin: 0;
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.subtitulo {
+    color: #cbd5f5;
+    margin: 5px 0 0 0;
+}
+
+.menu {
+    background-color: #3b82f6;
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    padding: 12px;
+}
+
+.menu a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.menu a:hover {
+    text-decoration: underline;
+}
+
+.contenido {
+    margin-top: 20px;
+}
+
+.footer {
+    margin-top: 30px;
+}
