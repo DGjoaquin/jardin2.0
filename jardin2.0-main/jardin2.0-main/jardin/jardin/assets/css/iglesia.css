@@ -41,11 +41,22 @@ body {
     background: #f8fafc;
 }
 
+
+
+.bloque:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    transition: 0.3s;
+}
+
 .bloque {
+    position: relative;
     background: white;
     padding: 20px;
     border-radius: 10px;
     margin-bottom: 20px;
+
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
 }
 
 .destacado {
@@ -96,4 +107,16 @@ body {
     font-size: 26px;
     margin-bottom: 10px;
     color: #1e3a8a;
+}
+
+.imagen-banner {
+    width: 100%;
+    height: auto;
+    max-height: 350px; 
+}
+
+.materialbox-caption {
+    font-size: 30px;
+    color: white;
+    text-align: center;
 }

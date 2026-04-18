@@ -10,6 +10,15 @@
     <link rel="stylesheet" href="assets/css/iglesia.css">
 </head>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.materialboxed');
+    M.Materialbox.init(elems);
+});
+</script>
+
 <body>
 
     <header class="encabezado">
@@ -22,6 +31,14 @@
         <a href="#mision">Misión</a>
         <a href="#contacto">Contacto</a>
     </nav>
+
+    <section class="imagen-principal">
+        <img 
+            class="materialboxed imagen-banner"
+            src="assets/img/ImagenJardin.jpeg" 
+            alt="Jardín Infantil Punta Negra" 
+            data-caption="Jardín Infantil Punta Negra - Establecimiento Educacional">
+    </section>
 
     <main>
 
