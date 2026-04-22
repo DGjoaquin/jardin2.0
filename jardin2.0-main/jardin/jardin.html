@@ -27,16 +27,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 <h1 class="logo">Jardín Infantil Punta Negra</h1>
                 <p class="subtitulo">Educación con afectividad y valores</p>
             </div>
-            <img src="assets/img/InsigniaJardin.png" alt="Logo Jardín" class="logo-img">
+            <img src="assets/img/InsigniaJardin.png" 
+            alt="Logo Jardín" 
+            class="logo-img">
         </div>
     </header>
 
     <nav class="menu">
-        <a href="#">Inicio</a>
-        <a href="#mision">Misión</a>
-        <a href="#vision">Vision</a>
-        <a href="#valores">Valores</a>
-        <a href="#contacto">Contacto</a>
+        <div class="contenedor">
+            <a href="#">Inicio</a>
+            <a href="#mision">Misión</a>
+            <a href="#vision">Vision</a>
+            <a href="#valores">Valores</a>
+            <a href="#espacios">Espacios</a>
+            <a href="#contacto">Contacto</a>
+        </div>
     </nav>
 
     <section class="imagen-principal">
@@ -72,34 +77,92 @@ document.addEventListener('DOMContentLoaded', function() {
                         Fortalecer conocimientos, destrezas y habilidades en las niñas y niños a través del desarrollo de la creatividad.
                     </p>
                 </article>
-            <div class="seccion-valores">
-                <article class="valores-principal" id="valores">
-                    <div class="imagen-valores">
-                        <img src="assets/img/valores.jpg">
+
+                <div class="seccion-valores">
+
+                    <article class="valores-principal" id="valores">
+                        <div class="imagen-valores">
+                            <img 
+                                src="assets/img/valores.jpg" 
+                                alt="Niños compartiendo y aprendiendo valores en el jardín infantil">
+                        </div>
+
+                        <h2>Nuestros Valores</h2>
+
+                        <p>
+                            En nuestro jardín infantil promovemos un ambiente lleno de cariño, confianza y seguridad, donde cada niño y niña pueda desarrollarse de manera integral y sentirse valorado.
+
+                            A través de nuestras actividades diarias, fomentamos hábitos, actitudes y formas de relacionarse que favorecen una convivencia armoniosa, el aprendizaje y el bienestar de todos.
+
+                            Creemos que los valores se aprenden desde pequeños, mediante el ejemplo, el juego y la interacción, acompañando a cada niño y niña en su crecimiento y formación dentro de un entorno afectivo y respetuoso.
+                        </p>
+                    </article>
+
+                    <div class="notas-valores">
+
+                        <article class="nota nota-amarilla">
+                            <h2>Respeto</h2>
+                            <p>
+                                Es la base fundamental para una convivencia sana y pacífica entre los miembros de una comunidad
+                            </p>
+                        </article>
+
+                        <article class="nota nota-verde">
+                            <h2>Diálogo</h2>
+                            <p>
+                                Pensar con inteligencia y cuidado lo que vamos a decir, escuchar atentamente a otros y hacernos oír con respeto por los demás
+                            </p>
+                        </article>
+
                     </div>
-                    <h2>Nuestros Valores</h2>
-                    <p>
-                        En nuestro jardín infantil promovemos un ambiente lleno de cariño, confianza y seguridad, donde cada niño y niña pueda desarrollarse de manera integral y sentirse valorado.
 
-                        A través de nuestras actividades diarias, fomentamos hábitos, actitudes y formas de relacionarse que favorecen una convivencia armoniosa, el aprendizaje y el bienestar de todos.
+                </div>
 
-                        Creemos que los valores se aprenden desde pequeños, mediante el ejemplo, el juego y la interacción, acompañando a cada niño y niña en su crecimiento y formación dentro de un entorno afectivo y respetuoso.
-                    </p>
-                </article>
-            <div class="notas-valores">
-                <article class="nota nota-amarilla">
-                    <h2>Respeto</h2>
-                    <p>
-                        Es la base fundamental para una convivencia sana y pacífica entre los miembros de una comunidad
-                    </p>
-                </article>
+            </div>
+        </section>
 
-                <article class="nota nota-verde">
-                    <h2>Diálogo</h2>
-                    <p>
-                        Pensar con inteligencia y cuidado lo que vamos a decir, escuchar atentamente a otros y hacernos oír con respeto por los demás
-                    </p>
-                </article>
+        <section class="seccion-espacios">
+            <h2 class="titulo-espacios" id="espacios">
+                Nuestros Espacios
+            </h2>
+
+            <div class="contenedor-espacios">
+
+                <div class="tarjeta-espacio">
+                    <img src="assets/img/PasilloPrincipal.jpg" 
+                    alt="Pasillo principal del jardín" 
+                    class="materialboxed">
+                    <div class="texto-espacio">Pasillo Principal</div>
+                </div>
+
+                <div class="tarjeta-espacio">
+                    <img src="assets/img/PrimeraSala.jpg" 
+                    alt="Primera sala del jardín" 
+                    class="materialboxed">
+                    <div class="texto-espacio">Primera Sala</div>
+                </div>
+
+                <div class="tarjeta-espacio">
+                    <img src="assets/img/SegundaSala.jpg" 
+                    alt="Segunda sala del jardín" 
+                    class="materialboxed">
+                    <div class="texto-espacio">Segunda Sala</div>
+                </div>
+
+                <div class="tarjeta-espacio">
+                    <img src="assets/img/Patio.jpg" 
+                    alt="Patio de recreo del jardín" 
+                    class="materialboxed">
+                    <div class="texto-espacio">Patio de Recreo</div>
+                </div>
+
+                <div class="tarjeta-espacio">
+                    <img src="assets/img/Amamantamiento.jpg" 
+                    alt="Sala de amamantamiento del jardín" 
+                    class="materialboxed">
+                    <div class="texto-espacio">Sala de Amamantamiento</div>
+                </div>
+
             </div>
         </section>
 
@@ -149,5 +212,3 @@ document.addEventListener('DOMContentLoaded', function() {
 
 </body>
 </html>
-
-
