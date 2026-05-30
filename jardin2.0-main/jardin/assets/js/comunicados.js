@@ -72,9 +72,7 @@ window.onload = () => {
     document.addEventListener("click", (e) => {
         const menu = document.getElementById("menu-links");
         const btn = document.getElementById("btn-menu");
-
         const clickEnLink = e.target.closest("#menu-links a");
-
         if (clickEnLink) {
             menu.classList.remove("activo");
         }
