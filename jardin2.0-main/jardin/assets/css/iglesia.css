@@ -50,14 +50,13 @@ body {
 }
 
 .menu .contenedor {
-    display: flex;
     justify-content: center;
     gap: 20px;
     padding: 10px 0;
 }
 
 .menu a {
-    color: white;
+    color: black;
     text-decoration: none;
 }
 
@@ -289,3 +288,69 @@ section {
         height: 80px;
     }
 }
+
+#btn-menu {
+    display: block;
+    background: none;
+    border: none;
+    font-size: 30px;
+    color: white;
+    cursor: pointer;
+}
+
+
+#menu-links.activo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.menu {
+    position: relative;
+}
+
+#menu-links {
+    width: fit-content;
+    height: fit-content;
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    position: absolute;
+    background-color: rgba(186, 201, 226, 0.9);
+    top: 60px;
+    left: 0;
+    z-index: 5;
+    padding: 5px 10px;
+}
+
+#btn-menu {
+    position: relative;
+    z-index: 10;
+}
+
+#menu-links a {
+    font-size: 13px;
+    padding: 4px 8px;
+    margin: 2px 0;
+}
+
+@media (max-width: 600px) {
+
+    #btn-menu {
+        display: block;
+        text-align: center;
+        margin: 10px auto;
+    }
+
+    #menu-links {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    #menu-links.activo {
+        display: flex;
+    }
+}
+
+

@@ -1,5 +1,6 @@
 window.onload = () => {
     console.log("JS funcionando");
+    let favoritos = [];
     let comunicados = [
         {
             titulo: "Reunión de apoderados",
@@ -26,12 +27,27 @@ window.onload = () => {
                     <h5>${c.titulo}</h5>
                     <p>${c.descripcion}</p>
                     <small>${c.categoria}</small>
+                    <br>
+                    <button class="btn-fav">Agregar a favoritos</button>
                 </div>
             `;
         });
         contenedor.innerHTML = tarjetas.join("");
     }
+    function activarBotones(lista) {
+        let botones = document.querySelectorAll(".btn-fav");
+        botones.forEach((btn, index) => {
+            btn.addEventListener("click", () => {
+                let seleccionado = lista[index];
+                favoritos.push(seleccionado);
+                localStorage.setItem("favoritos", JSON.stringify(favoritos));
+                console.log(favoritos);
+            });
+        });
+    }
     mostrarComunicados(comunicados);
+    activarBotones(comunicados);
+
     let buscador = document.getElementById("buscador");
     buscador.addEventListener("input", () => {
         let texto = buscador.value.toLowerCase();
@@ -40,6 +56,17 @@ window.onload = () => {
         });
 
         mostrarComunicados(filtrados);
+        activarBotones(filtrados);
     });
+    
+    let btnMenu = document.getElementById("btn-menu");
+    let menu = document.getElementById("menu-links");
 
+    console.log(btnMenu);
+
+    btnMenu.addEventListener("click", () => {
+        console.log("click en menu");
+        menu.classList.toggle("activo");
+    });
 }
+
