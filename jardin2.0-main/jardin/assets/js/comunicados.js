@@ -1,7 +1,5 @@
 window.onload = () => {
-
     console.log("JS funcionando");
-
     let comunicados = [
         {
             titulo: "Reunión de apoderados",
@@ -21,17 +19,27 @@ window.onload = () => {
     ];
 
     let contenedor = document.getElementById("contenedor-comunicados");
+    function mostrarComunicados(lista) {
+        let tarjetas = lista.map((c) => {
+            return `
+                <div class="card-panel">
+                    <h5>${c.titulo}</h5>
+                    <p>${c.descripcion}</p>
+                    <small>${c.categoria}</small>
+                </div>
+            `;
+        });
+        contenedor.innerHTML = tarjetas.join("");
+    }
+    mostrarComunicados(comunicados);
+    let buscador = document.getElementById("buscador");
+    buscador.addEventListener("input", () => {
+        let texto = buscador.value.toLowerCase();
+        let filtrados = comunicados.filter((c) => {
+            return c.titulo.toLowerCase().includes(texto);
+        });
 
-    let tarjetas = comunicados.map((c) => {
-        return `
-            <div class="card-panel">
-                <h5>${c.titulo}</h5>
-                <p>${c.descripcion}</p>
-                <small>${c.categoria}</small>
-            </div>
-        `;
+        mostrarComunicados(filtrados);
     });
-
-    contenedor.innerHTML = tarjetas.join("");
 
 }
