@@ -77,5 +77,45 @@ window.onload = () => {
             menu.classList.remove("activo");
         }
     });
+
+    let form = document.getElementById("form-contacto");
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        let nombre = document.getElementById("nombre").value.trim();
+        let email = document.getElementById("email").value.trim();
+        let mensaje = document.getElementById("mensaje").value.trim();
+
+        let errorNombre = document.getElementById("error-nombre");
+        let errorEmail = document.getElementById("error-email");
+        let errorMensaje = document.getElementById("error-mensaje");
+
+        let valido = true;
+
+        errorNombre.textContent = "";
+        errorEmail.textContent = "";
+        errorMensaje.textContent = "";
+
+        if (nombre.length < 3) {
+            errorNombre.textContent = "Nombre mínimo 3 caracteres";
+            valido = false;
+        }
+
+        let regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!regexEmail.test(email)) {
+            errorEmail.textContent = "Email inválido";
+            valido = false;
+        }
+
+        if (mensaje.length < 10) {
+            errorMensaje.textContent = "Mensaje mínimo 10 caracteres";
+            valido = false;
+        }
+
+        if (valido) {
+            alert("Formulario enviado correctamente");
+
+            form.reset();
+        }
+    });
 }
 
