@@ -117,5 +117,17 @@ window.onload = () => {
             form.reset();
         }
     });
+    let btnDark = document.getElementById("btn-dark");
+    if (localStorage.getItem("modo") === "dark") {
+        document.body.classList.add("dark");
+    }
+    btnDark.addEventListener("click", () => {
+        document.body.classList.toggle("dark");
+        if (document.body.classList.contains("dark")) {
+            localStorage.setItem("modo", "dark");
+        } else {
+            localStorage.setItem("modo", "light");
+        }
+    });
 }
 
