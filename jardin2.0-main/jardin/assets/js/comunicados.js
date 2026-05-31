@@ -1,39 +1,26 @@
 window.onload = () => {
     console.log("JS funcionando");
     let favoritos = [];
-    let comunicados = [
-        {
-            titulo: "Reunión de apoderados",
-            descripcion: "Se realizará el viernes a las 10:00 hrs.",
-            categoria: "Reuniones"
-        },
-        {
-            titulo: "Vacunación infantil",
-            descripcion: "Campaña de salud el día lunes.",
-            categoria: "Salud"
-        },
-        {
-            titulo: "Salida pedagógica",
-            descripcion: "Visita al parque educativo.",
-            categoria: "Actividades"
-        }
-    ];
-
+    let comunicados = JSON.parse(localStorage.getItem("comunicados")) || [];
     let contenedor = document.getElementById("contenedor-comunicados");
+
     function mostrarComunicados(lista) {
-        let tarjetas = lista.map((c) => {
+        let tarjetas = lista.map((c, index) => {
             return `
                 <div class="card-panel">
                     <h5>${c.titulo}</h5>
                     <p>${c.descripcion}</p>
                     <small>${c.categoria}</small>
                     <br>
+
                     <button class="btn-fav">Agregar a favoritos</button>
+                    <button class="btn-delete" data-index="${index}">Eliminar</button>
                 </div>
             `;
         });
         contenedor.innerHTML = tarjetas.join("");
     }
+
     function activarBotones(lista) {
         let botones = document.querySelectorAll(".btn-fav");
         botones.forEach((btn, index) => {
@@ -45,8 +32,28 @@ window.onload = () => {
             });
         });
     }
+
+    function activarEliminar(lista) {
+        let botones = document.querySelectorAll(".btn-delete");
+
+        botones.forEach((btn) => {
+            btn.addEventListener("click", (e) => {
+                let index = e.target.getAttribute("data-index");
+
+                lista.splice(index, 1);
+
+                localStorage.setItem("comunicados", JSON.stringify(lista));
+
+                mostrarComunicados(lista);
+                activarBotones(lista);
+                activarEliminar(lista);
+            });
+        });
+    }
+
     mostrarComunicados(comunicados);
     activarBotones(comunicados);
+    activarEliminar(comunicados);
 
     let buscador = document.getElementById("buscador");
     buscador.addEventListener("input", () => {
