@@ -402,18 +402,24 @@ body.dark #menu-links a {
     padding: 5px;
 }
 
-body.dark main {
-    background: #0f172a;
-}
-
 body.dark .seccion-info {
     background: #0b1220;
 }
 
-body.dark .encabezado,
-body.dark .footer,
-body.dark .menu {
-    background-color: #111827;
+body.dark input,
+body.dark textarea {
+    background: #0b1220;
+    color: white;
+    border: 1px solid #0b4faf;
+}
+
+body.dark section {
+    background: transparent !important;
+}
+
+body.dark {
+    background: #0f172a;
+    color: white;
 }
 
 body.dark .bloque,
@@ -425,9 +431,15 @@ body.dark .card-panel {
     color: white;
 }
 
-body.dark input,
-body.dark textarea {
-    background: #0b1220;
-    color: white;
-    border: 1px solid #334155;
+body.dark .menu,
+body.dark .encabezado,
+body.dark .footer {
+    background: #111827;
+}
+
+
+#form-contacto input::placeholder,
+#form-contacto textarea::placeholder,
+#buscador::placeholder {
+    color: #555 !important;
 }

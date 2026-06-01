@@ -2,22 +2,44 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Crear comunicados</title>
+    <title>Administrar comunicados</title>
     <link rel="stylesheet" href="assets/css/iglesia.css">
 </head>
+
 <body>
 
-<h2>Crear comunicado</h2>
+<header class="encabezado">
+    <div class="contenedor-logo">
+        <div class="texto-header">
+            <h1 class="logo">Administrar Comunicados</h1>
+            <p class="subtitulo">Crear nuevos avisos para el jardín</p>
+        </div>
+    </div>
+</header>
 
-<form id="form-comunicado">
+<section class="seccion-info">
+    <div class="container">
 
-    <input type="text" id="titulo" placeholder="Título">
-    <input type="text" id="descripcion" placeholder="Descripción">
-    <input type="text" id="categoria" placeholder="Categoría">
+        <div class="bloque">
+            <h2>Crear comunicado</h2>
 
-    <button type="submit">Guardar</button>
+            <form id="form-comunicado">
 
-</form>
+                <input type="text" id="titulo" placeholder="Título">
+                <input type="text" id="descripcion" placeholder="Descripción">
+                <input type="text" id="categoria" placeholder="Categoría">
+
+                <button type="submit" class="btn">Guardar</button>
+
+            </form>
+        </div>
+
+        <div style="margin-top: 20px;">
+            <a href="jardin.html" class="btn">⬅ Volver al inicio</a>
+        </div>
+
+    </div>
+</section>
 
 <script src="assets/js/comunicados-admin.js"></script>
 

@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/iglesia.css">
+    
 </head>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
 <script>
@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     <nav class="menu">
         <div class="nav-bar">
-            <button id="btn-menu">☰</button>
+            <button id="btn-menu" aria-expanded="false">☰</button>
             <button id="btn-dark">🌙</button>
         </div>
 
@@ -46,6 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <a href="#valores">Valores</a>
             <a href="#espacios">Espacios</a>
             <a href="#contacto">Contacto</a>
+            <a href="comunicados.html">Administrar comunicados</a>
         </div>
     </nav>
 
@@ -174,7 +175,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="container">
                 <h2>Comunicados</h2>
                 <input type="text" id="buscador" placeholder="Buscar comunicado...">
-                <button class="sidebar-btn" onclick="filtrar('favoritos')" id="favoritos">
+                <button class="sidebar-btn" id="favoritos">
                     <span class="icon">⭐</span> Favoritos
                 </button>
                 <div id="contenedor-comunicados"></div>
