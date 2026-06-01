@@ -1,19 +1,26 @@
 window.onload = () => {
     console.log("JS funcionando");
-    let favoritos = [];
     let comunicados = JSON.parse(localStorage.getItem("comunicados")) || [];
+    let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
     let contenedor = document.getElementById("contenedor-comunicados");
+    let mostrando = "todos";
 
     function mostrarComunicados(lista) {
         let tarjetas = lista.map((c, index) => {
+            let esFavorito = favoritos.some(fav => 
+                fav.titulo === c.titulo && fav.descripcion === c.descripcion
+            );
+            let botónFav = esFavorito 
+                ? `<button class="btn-fav btn-fav-activo" data-index="${index}">⭐ Favorito</button>`
+                : `<button class="btn-fav" data-index="${index}">☆ Agregar a favoritos</button>`;
+            
             return `
                 <div class="card-panel">
                     <h5>${c.titulo}</h5>
                     <p>${c.descripcion}</p>
                     <small>${c.categoria}</small>
                     <br>
-
-                    <button class="btn-fav">Agregar a favoritos</button>
+                    ${botónFav}
                     <button class="btn-delete" data-index="${index}">Eliminar</button>
                 </div>
             `;
@@ -26,9 +33,28 @@ window.onload = () => {
         botones.forEach((btn, index) => {
             btn.addEventListener("click", () => {
                 let seleccionado = lista[index];
-                favoritos.push(seleccionado);
+                let esFavorito = favoritos.some(fav => 
+                    fav.titulo === seleccionado.titulo && fav.descripcion === seleccionado.descripcion
+                );
+                
+                if (esFavorito) {
+                    favoritos = favoritos.filter(fav => 
+                        !(fav.titulo === seleccionado.titulo && fav.descripcion === seleccionado.descripcion)
+                    );
+                } else {
+                    favoritos.push(seleccionado);
+                }
+                
                 localStorage.setItem("favoritos", JSON.stringify(favoritos));
-                console.log(favoritos);
+                console.log("Favoritos actualizado:", favoritos);
+                
+                if (mostrando === "todos") {
+                    mostrarComunicados(comunicados);
+                    activarBotones(comunicados);
+                } else if (mostrando === "favoritos") {
+                    mostrarComunicados(favoritos);
+                    activarBotones(favoritos);
+                }
             });
         });
     }
@@ -39,17 +65,47 @@ window.onload = () => {
         botones.forEach((btn) => {
             btn.addEventListener("click", (e) => {
                 let index = e.target.getAttribute("data-index");
+                let comunicadoAEliminar = lista[index];
 
                 lista.splice(index, 1);
 
-                localStorage.setItem("comunicados", JSON.stringify(lista));
+                favoritos = favoritos.filter(fav => 
+                    !(fav.titulo === comunicadoAEliminar.titulo && fav.descripcion === comunicadoAEliminar.descripcion)
+                );
 
-                mostrarComunicados(lista);
-                activarBotones(lista);
-                activarEliminar(lista);
+                localStorage.setItem("comunicados", JSON.stringify(lista));
+                localStorage.setItem("favoritos", JSON.stringify(favoritos));
+
+                if (mostrando === "todos") {
+                    mostrarComunicados(lista);
+                    activarBotones(lista);
+                    activarEliminar(lista);
+                } else if (mostrando === "favoritos") {
+                    mostrarComunicados(favoritos);
+                    activarBotones(favoritos);
+                    activarEliminar(favoritos);
+                }
             });
         });
     }
+
+    window.filtrar = (tipo) => {
+        if (tipo === "favoritos") {
+            if (mostrando === "favoritos") {
+                mostrando = "todos";
+                document.getElementById("favoritos").classList.remove("activo");
+                mostrarComunicados(comunicados);
+                activarBotones(comunicados);
+                activarEliminar(comunicados);
+            } else {
+                mostrando = "favoritos";
+                document.getElementById("favoritos").classList.add("activo");
+                mostrarComunicados(favoritos);
+                activarBotones(favoritos);
+                activarEliminar(favoritos);
+            }
+        }
+    };
 
     mostrarComunicados(comunicados);
     activarBotones(comunicados);
@@ -58,7 +114,8 @@ window.onload = () => {
     let buscador = document.getElementById("buscador");
     buscador.addEventListener("input", () => {
         let texto = buscador.value.toLowerCase();
-        let filtrados = comunicados.filter((c) => {
+        let listaActual = mostrando === "favoritos" ? favoritos : comunicados;
+        let filtrados = listaActual.filter((c) => {
             return c.titulo.toLowerCase().includes(texto);
         });
 
@@ -137,4 +194,3 @@ window.onload = () => {
         }
     });
 }
-
