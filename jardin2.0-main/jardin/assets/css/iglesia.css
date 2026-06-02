@@ -303,6 +303,9 @@ section {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
 }
 
 .menu {
@@ -321,6 +324,10 @@ section {
     left: 0;
     z-index: 5;
     padding: 2px 6px;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: 0.2s ease;
+    pointer-events: none;
 }
 
 #btn-menu {

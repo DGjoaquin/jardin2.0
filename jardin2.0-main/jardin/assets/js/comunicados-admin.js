@@ -10,10 +10,22 @@ document.addEventListener("DOMContentLoaded", () => {
     let errorDescripcion = document.getElementById("error-descripcion");
     let errorCategoria = document.getElementById("error-categoria");
 
-    // 🔥 detectar edición (SIN referrer raro)
+    // ♿ accesibilidad: live region
+    [errorTitulo, errorDescripcion, errorCategoria].forEach(el => {
+        if (el) el.setAttribute("aria-live", "polite");
+    });
+
+    // 🔒 sanitización básica (evita scripts simples)
+    function limpiar(input) {
+        return input
+            .replace(/</g, "")
+            .replace(/>/g, "")
+            .replace(/script/gi, "")
+            .trim();
+    }
+
     let editando = JSON.parse(localStorage.getItem("editarComunicado"));
 
-    // ✏️ cargar datos si está editando
     if (editando) {
         inputTitulo.value = editando.titulo;
         inputDescripcion.value = editando.descripcion;
@@ -23,18 +35,16 @@ document.addEventListener("DOMContentLoaded", () => {
     form.addEventListener("submit", (e) => {
         e.preventDefault();
 
-        let titulo = inputTitulo.value.trim();
-        let descripcion = inputDescripcion.value.trim();
-        let categoria = inputCategoria.value.trim();
+        let titulo = limpiar(inputTitulo.value);
+        let descripcion = limpiar(inputDescripcion.value);
+        let categoria = limpiar(inputCategoria.value);
 
         let valido = true;
 
-        // limpiar errores
         errorTitulo.textContent = "";
         errorDescripcion.textContent = "";
         errorCategoria.textContent = "";
 
-        // ✅ VALIDACIONES
         if (titulo.length < 3) {
             errorTitulo.textContent = "Mínimo 3 caracteres";
             valido = false;
@@ -54,25 +64,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
         let lista = JSON.parse(localStorage.getItem("comunicados")) || [];
 
-        // 🔥 EDITAR
         if (editando) {
-            lista[editando.index] = {
-                titulo,
-                descripcion,
-                categoria
-            };
+            lista[editando.index] = { titulo, descripcion, categoria };
 
             localStorage.removeItem("editarComunicado");
             alert("✏️ Comunicado actualizado");
-        } 
-        // 🆕 CREAR
-        else {
-            lista.push({
-                titulo,
-                descripcion,
-                categoria
-            });
-
+        } else {
+            lista.push({ titulo, descripcion, categoria });
             alert("✅ Comunicado guardado");
         }
 
@@ -80,11 +78,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         form.reset();
 
-        // 🔙 volver
         window.location.href = "jardin.html";
     });
 
-    // 🧹 LIMPIAR edición si sales sin guardar
     window.addEventListener("beforeunload", () => {
         localStorage.removeItem("editarComunicado");
     });
