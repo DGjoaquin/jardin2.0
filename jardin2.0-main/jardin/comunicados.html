@@ -6,8 +6,7 @@
     <link rel="stylesheet" href="assets/css/iglesia.css">
 </head>
 
-<body>
-
+<body class="pagina-comunicados">
 <header class="encabezado">
     <div class="contenedor-logo">
         <div class="texto-header">
@@ -26,8 +25,13 @@
             <form id="form-comunicado">
 
                 <input type="text" id="titulo" placeholder="Título">
+                <small id="error-titulo" class="error"></small>
+
                 <input type="text" id="descripcion" placeholder="Descripción">
+                <small id="error-descripcion" class="error"></small>
+
                 <input type="text" id="categoria" placeholder="Categoría">
+                <small id="error-categoria" class="error"></small>
 
                 <button type="submit" class="btn">Guardar</button>
 

@@ -10,38 +10,64 @@ window.onload = () => {
     let mostrando = "todos";
     contenedor.dataset.vista = "todos";
 
+    // ✅ SEGURIDAD: usando createElement (no innerHTML)
     function mostrarComunicados(lista) {
-        let tarjetas = lista.map((c, index) => {
+        contenedor.innerHTML = "";
+
+        lista.forEach((c, index) => {
+
+            let tarjeta = document.createElement("div");
+            tarjeta.className = "card-panel";
+
+            let titulo = document.createElement("h5");
+            titulo.textContent = c.titulo;
+
+            let descripcion = document.createElement("p");
+            descripcion.textContent = c.descripcion;
+
+            let categoria = document.createElement("small");
+            categoria.textContent = c.categoria;
+
+            let btnFav = document.createElement("button");
+            btnFav.className = "btn-fav";
+            btnFav.dataset.index = index;
+
             let esFavorito = favoritos.some(fav =>
                 fav.titulo === c.titulo && fav.descripcion === c.descripcion
             );
 
-            let botonFav = esFavorito
-                ? `<button class="btn-fav btn-fav-activo" data-index="${index}">⭐ Favorito</button>`
-                : `<button class="btn-fav" data-index="${index}">☆ Agregar a favoritos</button>`;
+            btnFav.textContent = esFavorito
+                ? "⭐ Favorito"
+                : "☆ Agregar a favoritos";
 
-            return `
-                <div class="card-panel">
-                    <h5>${c.titulo}</h5>
-                    <p>${c.descripcion}</p>
-                    <small>${c.categoria}</small>
-                    <br>
-                    ${botonFav}
-                    <button class="btn-edit" data-index="${index}">✏️ Editar</button>
-                    <button class="btn-delete" data-index="${index}">Eliminar</button>
-                </div>
-            `;
+            let btnEdit = document.createElement("button");
+            btnEdit.className = "btn-edit";
+            btnEdit.dataset.index = index;
+            btnEdit.textContent = "✏️ Editar";
+
+            let btnDelete = document.createElement("button");
+            btnDelete.className = "btn-delete";
+            btnDelete.dataset.index = index;
+            btnDelete.textContent = "Eliminar";
+
+            tarjeta.appendChild(titulo);
+            tarjeta.appendChild(descripcion);
+            tarjeta.appendChild(categoria);
+            tarjeta.appendChild(document.createElement("br"));
+            tarjeta.appendChild(btnFav);
+            tarjeta.appendChild(btnEdit);
+            tarjeta.appendChild(btnDelete);
+
+            contenedor.appendChild(tarjeta);
         });
-
-        contenedor.innerHTML = tarjetas.join("");
     }
 
     function activarBotones(lista) {
         let botones = document.querySelectorAll(".btn-fav");
 
-        botones.forEach((btn, index) => {
+        botones.forEach((btn) => {
             btn.addEventListener("click", () => {
-                let seleccionado = lista[index];
+                let seleccionado = lista[btn.dataset.index];
 
                 let esFavorito = favoritos.some(fav =>
                     fav.titulo === seleccionado.titulo &&
@@ -58,7 +84,6 @@ window.onload = () => {
                 }
 
                 localStorage.setItem("favoritos", JSON.stringify(favoritos));
-
                 actualizarVista();
             });
         });
@@ -69,19 +94,17 @@ window.onload = () => {
 
         botones.forEach((btn) => {
             btn.addEventListener("click", (e) => {
-                let index = e.target.getAttribute("data-index");
+                let index = e.target.dataset.index;
                 let comunicadoAEliminar = lista[index];
 
                 let confirmar = confirm(`¿Eliminar "${comunicadoAEliminar.titulo}"?`);
                 if (!confirmar) return;
 
-                // eliminar del array principal
                 comunicados = comunicados.filter(c =>
                     !(c.titulo === comunicadoAEliminar.titulo &&
                       c.descripcion === comunicadoAEliminar.descripcion)
                 );
 
-                // eliminar de favoritos
                 favoritos = favoritos.filter(fav =>
                     !(fav.titulo === comunicadoAEliminar.titulo &&
                       fav.descripcion === comunicadoAEliminar.descripcion)
@@ -100,34 +123,18 @@ window.onload = () => {
 
         botones.forEach((btn) => {
             btn.addEventListener("click", (e) => {
-                let index = e.target.getAttribute("data-index");
+                let index = e.target.dataset.index;
                 let seleccionado = lista[index];
 
-                let nuevoTitulo = prompt("Editar título:", seleccionado.titulo);
-                if (nuevoTitulo === null) return;
+                localStorage.setItem("editarComunicado", JSON.stringify({
+                    ...seleccionado,
+                    index: comunicados.findIndex(c =>
+                        c.titulo === seleccionado.titulo &&
+                        c.descripcion === seleccionado.descripcion
+                    )
+                }));
 
-                let nuevaDescripcion = prompt("Editar descripción:", seleccionado.descripcion);
-                if (nuevaDescripcion === null) return;
-
-                let nuevaCategoria = prompt("Editar categoría:", seleccionado.categoria);
-                if (nuevaCategoria === null) return;
-
-                // actualizar en comunicados reales
-                comunicados = comunicados.map(c => {
-                    if (c.titulo === seleccionado.titulo &&
-                        c.descripcion === seleccionado.descripcion) {
-                        return {
-                            titulo: nuevoTitulo,
-                            descripcion: nuevaDescripcion,
-                            categoria: nuevaCategoria
-                        };
-                    }
-                    return c;
-                });
-
-                localStorage.setItem("comunicados", JSON.stringify(comunicados));
-
-                actualizarVista();
+                window.location.href = "comunicados.html";
             });
         });
     }
@@ -161,7 +168,6 @@ window.onload = () => {
 
     actualizarVista();
 
-    // 🔎 BUSCADOR
     let buscador = document.getElementById("buscador");
     if (buscador) {
         buscador.addEventListener("input", () => {
@@ -183,7 +189,6 @@ window.onload = () => {
         });
     }
 
-    // ⭐ FAVORITOS
     let btnFavoritos = document.getElementById("favoritos");
     if (btnFavoritos) {
         btnFavoritos.addEventListener("click", () => {
@@ -191,7 +196,6 @@ window.onload = () => {
         });
     }
 
-    // 📱 MENÚ
     let btnMenu = document.getElementById("btn-menu");
     let menu = document.getElementById("menu-links");
 
@@ -201,9 +205,9 @@ window.onload = () => {
         btnMenu.setAttribute("aria-expanded", "false");
 
         btnMenu.addEventListener("click", () => {
-            const activo = menu.classList.toggle("activo");
-            btnMenu.setAttribute("aria-expanded", activo);
-            menu.setAttribute("aria-hidden", !activo);
+            const visible = menu.style.display === "flex";
+            menu.style.display = visible ? "none" : "flex";
+            btnMenu.setAttribute("aria-expanded", !visible);
         });
 
         document.addEventListener("click", (e) => {
@@ -217,7 +221,6 @@ window.onload = () => {
         });
     }
 
-    // 📩 FORMULARIO
     let form = document.getElementById("form-contacto");
 
     if (form) {
@@ -261,7 +264,6 @@ window.onload = () => {
         });
     }
 
-    // 🌙 DARK MODE
     let btnDark = document.getElementById("btn-dark");
 
     if (btnDark) {

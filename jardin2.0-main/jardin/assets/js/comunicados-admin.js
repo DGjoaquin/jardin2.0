@@ -1,41 +1,91 @@
-let form = document.getElementById("form-comunicado");
+document.addEventListener("DOMContentLoaded", () => {
 
-form.addEventListener("submit", (e) => {
-    e.preventDefault();
+    let form = document.getElementById("form-comunicado");
 
-    let titulo = document.getElementById("titulo").value.trim();
-    let descripcion = document.getElementById("descripcion").value.trim();
-    let categoria = document.getElementById("categoria").value.trim();
+    let inputTitulo = document.getElementById("titulo");
+    let inputDescripcion = document.getElementById("descripcion");
+    let inputCategoria = document.getElementById("categoria");
 
-    // VALIDACIÓN
-    if (titulo.length < 3) {
-        alert("El título debe tener al menos 3 caracteres");
-        return;
+    let errorTitulo = document.getElementById("error-titulo");
+    let errorDescripcion = document.getElementById("error-descripcion");
+    let errorCategoria = document.getElementById("error-categoria");
+
+    // 🔥 detectar edición (SIN referrer raro)
+    let editando = JSON.parse(localStorage.getItem("editarComunicado"));
+
+    // ✏️ cargar datos si está editando
+    if (editando) {
+        inputTitulo.value = editando.titulo;
+        inputDescripcion.value = editando.descripcion;
+        inputCategoria.value = editando.categoria;
     }
 
-    if (descripcion.length < 5) {
-        alert("La descripción debe tener al menos 5 caracteres");
-        return;
-    }
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
 
-    if (categoria.length < 3) {
-        alert("La categoría debe tener al menos 3 caracteres");
-        return;
-    }
+        let titulo = inputTitulo.value.trim();
+        let descripcion = inputDescripcion.value.trim();
+        let categoria = inputCategoria.value.trim();
 
-    let nuevo = {
-        titulo,
-        descripcion,
-        categoria
-    };
+        let valido = true;
 
-    let lista = JSON.parse(localStorage.getItem("comunicados")) || [];
+        // limpiar errores
+        errorTitulo.textContent = "";
+        errorDescripcion.textContent = "";
+        errorCategoria.textContent = "";
 
-    lista.push(nuevo);
+        // ✅ VALIDACIONES
+        if (titulo.length < 3) {
+            errorTitulo.textContent = "Mínimo 3 caracteres";
+            valido = false;
+        }
 
-    localStorage.setItem("comunicados", JSON.stringify(lista));
+        if (descripcion.length < 5) {
+            errorDescripcion.textContent = "Mínimo 5 caracteres";
+            valido = false;
+        }
 
-    alert("✅ Comunicado guardado correctamente");
+        if (categoria.length < 3) {
+            errorCategoria.textContent = "Mínimo 3 caracteres";
+            valido = false;
+        }
 
-    form.reset();
+        if (!valido) return;
+
+        let lista = JSON.parse(localStorage.getItem("comunicados")) || [];
+
+        // 🔥 EDITAR
+        if (editando) {
+            lista[editando.index] = {
+                titulo,
+                descripcion,
+                categoria
+            };
+
+            localStorage.removeItem("editarComunicado");
+            alert("✏️ Comunicado actualizado");
+        } 
+        // 🆕 CREAR
+        else {
+            lista.push({
+                titulo,
+                descripcion,
+                categoria
+            });
+
+            alert("✅ Comunicado guardado");
+        }
+
+        localStorage.setItem("comunicados", JSON.stringify(lista));
+
+        form.reset();
+
+        // 🔙 volver
+        window.location.href = "jardin.html";
+    });
+
+    // 🧹 LIMPIAR edición si sales sin guardar
+    window.addEventListener("beforeunload", () => {
+        localStorage.removeItem("editarComunicado");
+    });
 });
