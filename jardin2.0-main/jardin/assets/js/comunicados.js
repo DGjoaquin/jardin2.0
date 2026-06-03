@@ -1,7 +1,11 @@
 window.onload = () => {
-
+    
     // Verifica que el archivo JS se cargó correctamente en el navegador
     console.log("JS funcionando");
+
+    // Inicializa imágenes ampliables de Materialize
+    let elems = document.querySelectorAll('.materialboxed');
+    M.Materialbox.init(elems);
 
     // Arreglo principal de comunicados almacenado en localStorage (persistencia)
     let comunicados = JSON.parse(localStorage.getItem("comunicados")) || [];
