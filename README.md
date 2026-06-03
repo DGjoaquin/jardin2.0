@@ -5,10 +5,10 @@
 - de momento lo que tendrá la pagina web es dar información de las reuniones del jardín a los padres;
 - las funcionalidades de la pagina son:;
 - modo oscuro;
-- recibir correos;
-- filtrar correos por favoritos;
-- buscar correos por titulo;
-- editar correos;
-- borrar correos;
+- recibir comunicados;
+- filtrar comunicados por favoritos;
+- buscar comunicados por titulo;
+- editar comunicados;
+- borrar comunicados;
 - Joaquín Díaz, Luis Alberco, Amaro Oportus;
 - https://dgjoaquin.github.io/jardin2.0/ ;
